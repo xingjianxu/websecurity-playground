@@ -33,9 +33,31 @@ public class DBTestServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 查询users表中有多少行，并将行数显示在网页中
+
+		try {
+			// 2. 创建数据库连接
+			Connection conn = DBUtils.getConnection();
+			
+			// 3. 创建statement
+			Statement statement = conn.createStatement();
+			
+			// 4. 在statement上执行sql语句，返回结果存储在ResultSet中
+			ResultSet resultSet = statement.executeQuery("SELECT count(*) FROM users;");
+
+			// 5. 从resultSet中读取数据
+			resultSet.next();
+			// 第一列的下标为1
+			int count = resultSet.getInt(1);
+			response.getWriter().append(String.valueOf(count));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		response.flushBuffer();
 	
 	}
 	
+	// 演示如何查询数据库
 	private void queryAll(HttpServletResponse response) throws IOException {
 		// 1. 加载数据库驱动
 		try {
