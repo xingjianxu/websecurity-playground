@@ -1,10 +1,12 @@
-package playground;
+package playground.login.basic;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import playground.DBUtils;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,13 +16,13 @@ import java.sql.Statement;
 /**
  * Servlet implementation class LoginServlet
  */
-public class LoginServlet extends HttpServlet {
+public class LoginWithPlainCookieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public LoginWithPlainCookieServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,6 +39,8 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=utf-8");
+        
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		
@@ -52,13 +56,17 @@ public class LoginServlet extends HttpServlet {
 				if (password.equals(dbPassword)) {
 					// 用户提交了正确的用户与密码，允许登录
 					response.getWriter().println("登录成功！");
+					
+					//设置用于标明用户名的cookie
+					Cookie cookie = new Cookie("username", username);
+					cookie.setHttpOnly(true);
+					response.addCookie(cookie);
 				} else {
 					// 用户提交了错误的用户与密码，不允许登录
 					response.getWriter().println("登录失败：用户名与密码不匹配");
 				}
 			} else {
 				response.getWriter().println("用户不存在！");
-
 			}
 						
 		} catch (SQLException e) {
