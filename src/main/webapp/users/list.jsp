@@ -14,7 +14,7 @@
 	<%
 	Connection conn = DBUtils.getConnection();
 	Statement st = conn.createStatement();
-	ResultSet rs = st.executeQuery("SELECT * FROM users");
+	ResultSet rs = st.executeQuery("SELECT * FROM users ORDER BY id ASC");
 	%>
 	<table>
 		<thead>

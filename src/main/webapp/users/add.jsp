@@ -8,7 +8,6 @@
 </head>
 <body>
 
-
 <form action="/playground/users/add" method="post">
 	用户名：<input type="text" name="username">
 	<br/>
