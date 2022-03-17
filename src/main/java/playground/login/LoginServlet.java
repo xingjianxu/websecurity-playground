@@ -1,4 +1,4 @@
-package playground.login.basic;
+package playground.login;
 
 import jakarta.servlet.ServletException;
 import playground.DBUtils;
@@ -15,13 +15,13 @@ import java.sql.Statement;
 /**
  * Servlet implementation class LoginWithSession
  */
-public class LoginWithSession extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LoginWithSession() {
+	public LoginServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -52,23 +52,23 @@ public class LoginWithSession extends HttpServlet {
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT password FROM users WHERE username='" + username + "'");
 
-			// Èç¹ûrs¿ÉÒÔ½«ÓÎ±êÏòÏÂÒÆ¶¯Ò»ĞĞ£¬ËµÃ÷ÉÏÃæµÄSQL·µ»ØÁËÊı¾İ£¬¼´username¶ÔÓ¦µÄÓÃ»§´æÔÚ£»·´Ö®£¬ÔòËµÃ÷ÓÃ»§²»´æÔÚ
+			// å¦‚æœrså¯ä»¥å°†æ¸¸æ ‡å‘ä¸‹ç§»åŠ¨ä¸€è¡Œï¼Œè¯´æ˜ä¸Šé¢çš„SQLè¿”å›äº†æ•°æ®ï¼Œå³usernameå¯¹åº”çš„ç”¨æˆ·å­˜åœ¨ï¼›åä¹‹ï¼Œåˆ™è¯´æ˜ç”¨æˆ·ä¸å­˜åœ¨
 			if (rs.next()) {
 				String dbPassword = rs.getNString("password");
 
 				if (password.equals(dbPassword)) {
-					// ÓÃ»§Ìá½»ÁËÕıÈ·µÄÓÃ»§ÓëÃÜÂë£¬ÔÊĞíµÇÂ¼
+					// ç”¨æˆ·æäº¤äº†æ­£ç¡®çš„ç”¨æˆ·ä¸å¯†ç ï¼Œå…è®¸ç™»å½•
 					response.sendRedirect("index.jsp");
 
-					// ½«µÇÂ¼ÓÃ»§µÄÓÃ»§Ãû´æÔÚsessionÖĞ
+					// å°†ç™»å½•ç”¨æˆ·çš„ç”¨æˆ·åå­˜åœ¨sessionä¸­
 					request.getSession().setAttribute("username", username);
 
 				} else {
-					// ÓÃ»§Ìá½»ÁË´íÎóµÄÓÃ»§ÓëÃÜÂë£¬²»ÔÊĞíµÇÂ¼
-					response.getWriter().println("µÇÂ¼Ê§°Ü£ºÓÃ»§ÃûÓëÃÜÂë²»Æ¥Åä");
+					// ç”¨æˆ·æäº¤äº†é”™è¯¯çš„ç”¨æˆ·ä¸å¯†ç ï¼Œä¸å…è®¸ç™»å½•
+					response.getWriter().println("ç™»å½•å¤±è´¥ï¼šç”¨æˆ·åä¸å¯†ç ä¸åŒ¹é…");
 				}
 			} else {
-				response.getWriter().println("ÓÃ»§²»´æÔÚ£¡");
+				response.getWriter().println("ç”¨æˆ·ä¸å­˜åœ¨ï¼");
 			}
 
 		} catch (SQLException e) {

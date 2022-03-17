@@ -32,21 +32,21 @@ public class DBTestServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// ²éÑ¯users±íÖĞÓĞ¶àÉÙĞĞ£¬²¢½«ĞĞÊıÏÔÊ¾ÔÚÍøÒ³ÖĞ
+		// æŸ¥è¯¢usersè¡¨ä¸­æœ‰å¤šå°‘è¡Œï¼Œå¹¶å°†è¡Œæ•°æ˜¾ç¤ºåœ¨ç½‘é¡µä¸­
 
 		try {
-			// 2. ´´½¨Êı¾İ¿âÁ¬½Ó
+			// 2. åˆ›å»ºæ•°æ®åº“è¿æ¥
 			Connection conn = DBUtils.getConnection();
 			
-			// 3. ´´½¨statement
+			// 3. åˆ›å»ºstatement
 			Statement statement = conn.createStatement();
 			
-			// 4. ÔÚstatementÉÏÖ´ĞĞsqlÓï¾ä£¬·µ»Ø½á¹û´æ´¢ÔÚResultSetÖĞ
+			// 4. åœ¨statementä¸Šæ‰§è¡Œsqlè¯­å¥ï¼Œè¿”å›ç»“æœå­˜å‚¨åœ¨ResultSetä¸­
 			ResultSet resultSet = statement.executeQuery("SELECT count(*) FROM users;");
 
-			// 5. ´ÓresultSetÖĞ¶ÁÈ¡Êı¾İ
+			// 5. ä»resultSetä¸­è¯»å–æ•°æ®
 			resultSet.next();
-			// µÚÒ»ÁĞµÄÏÂ±êÎª1
+			// ç¬¬ä¸€åˆ—çš„ä¸‹æ ‡ä¸º1
 			int count = resultSet.getInt(1);
 			response.getWriter().append(String.valueOf(count));
 
@@ -57,9 +57,9 @@ public class DBTestServlet extends HttpServlet {
 	
 	}
 	
-	// ÑİÊ¾ÈçºÎ²éÑ¯Êı¾İ¿â
+	// æ¼”ç¤ºå¦‚ä½•æŸ¥è¯¢æ•°æ®åº“
 	private void queryAll(HttpServletResponse response) throws IOException {
-		// 1. ¼ÓÔØÊı¾İ¿âÇı¶¯
+		// 1. åŠ è½½æ•°æ®åº“é©±åŠ¨
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -67,20 +67,20 @@ public class DBTestServlet extends HttpServlet {
 		}
 
 		try {
-			// 2. ´´½¨Êı¾İ¿âÁ¬½Ó
+			// 2. åˆ›å»ºæ•°æ®åº“è¿æ¥
 			Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://192.168.152.128:3306/playground?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC",
 					"root", "1");
 			
-			// 3. ´´½¨statement
+			// 3. åˆ›å»ºstatement
 			Statement statement = conn.createStatement();
 			
-			// 4. ÔÚstatementÉÏÖ´ĞĞsqlÓï¾ä£¬·µ»Ø½á¹û´æ´¢ÔÚResultSetÖĞ
+			// 4. åœ¨statementä¸Šæ‰§è¡Œsqlè¯­å¥ï¼Œè¿”å›ç»“æœå­˜å‚¨åœ¨ResultSetä¸­
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM users;");
 
-			// 5. ´ÓresultSetÖĞ¶ÁÈ¡Êı¾İ
+			// 5. ä»resultSetä¸­è¯»å–æ•°æ®
 			do {
-				// ÈÃÓÎ±êÖ¸ÏòÏÂÒ»ĞĞ
+				// è®©æ¸¸æ ‡æŒ‡å‘ä¸‹ä¸€è¡Œ
 				resultSet.next();
 				String username = resultSet.getNString("username");
 				String password = resultSet.getNString("password");

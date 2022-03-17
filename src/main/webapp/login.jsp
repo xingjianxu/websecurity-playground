@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="/playground/1_login_basic/login_with_session/login" method="post">
+<form action="/playground/login" method="post">
 	用户名：<input type="text" name="username">
 	<br/>
 	密码：<input type="password" name="password">

@@ -1,4 +1,4 @@
-package playground.login.basic;
+package playground.login;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,13 +10,13 @@ import java.io.IOException;
 /**
  * Servlet implementation class LogoutWithSessionServlet
  */
-public class LogoutWithSessionServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutWithSessionServlet() {
+    public LogoutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -25,10 +25,10 @@ public class LogoutWithSessionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 通过清除session中的username属性，实现用户登出
+		// 閫氳繃绉婚櫎session灞炴�э紝瀹炵幇鐢ㄦ埛鐧诲嚭
 		request.getSession().removeAttribute("username");
 		
-		// 跳转到index.jsp
+		// 閲嶅畾鍚戝埌index.jsp
 		response.sendRedirect("index.jsp");
 	}
 
