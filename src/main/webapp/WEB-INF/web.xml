@@ -9,6 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
   <servlet>
     <description></description>
     <display-name>DBTestServlet</display-name>
@@ -19,16 +20,19 @@
     <servlet-name>DBTestServlet</servlet-name>
     <url-pattern>/db</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>LoginWithPlainCookieServlet</display-name>
     <servlet-name>LoginWithPlainCookieServlet</servlet-name>
     <servlet-class>playground.login.basic.LoginWithPlainCookieServlet</servlet-class>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>LoginWithPlainCookieServlet</servlet-name>
     <url-pattern>/1_login_basic/login_with_plain_cookie/login</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>LoginWithSession</display-name>
@@ -39,6 +43,7 @@
     <servlet-name>LoginWithSession</servlet-name>
     <url-pattern>/1_login_basic/login_with_session/login</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>LogoutWithSessionServlet</display-name>
@@ -48,5 +53,16 @@
   <servlet-mapping>
     <servlet-name>LogoutWithSessionServlet</servlet-name>
     <url-pattern>/1_login_basic/login_with_session/logout</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>UserAddServlet</display-name>
+    <servlet-name>UserAddServlet</servlet-name>
+    <servlet-class>playground.users.UserAddServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserAddServlet</servlet-name>
+    <url-pattern>/users/add</url-pattern>
   </servlet-mapping>
 </web-app>
