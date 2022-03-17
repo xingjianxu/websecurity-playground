@@ -9,7 +9,6 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <description></description>
     <display-name>DBTestServlet</display-name>
@@ -20,7 +19,6 @@
     <servlet-name>DBTestServlet</servlet-name>
     <url-pattern>/db</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>LoginServlet</display-name>
@@ -31,7 +29,6 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>LogoutServlet</display-name>
@@ -42,7 +39,6 @@
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>UserAddServlet</display-name>
@@ -52,5 +48,25 @@
   <servlet-mapping>
     <servlet-name>UserAddServlet</servlet-name>
     <url-pattern>/users/add</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UserDelServlet</display-name>
+    <servlet-name>UserDelServlet</servlet-name>
+    <servlet-class>playground.users.UserDelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserDelServlet</servlet-name>
+    <url-pattern>/users/del</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChangePasswordServlet</display-name>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-class>playground.users.ChangePasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <url-pattern>/users/changePassword</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -9,20 +9,19 @@ import playground.DBUtils;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * ������û�
+ * Servlet implementation class ChangePasswordServlet
  */
-public class UserAddServlet extends HttpServlet {
+public class ChangePasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public UserAddServlet() {
+	public ChangePasswordServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -44,10 +43,9 @@ public class UserAddServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String username = request.getParameter("username");
+		String id = request.getParameter("id");
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
-
 		// 判断密码是否一致
 		if (!password1.equals(password2)) {
 			response.getWriter().println("密码不一致！");
@@ -57,23 +55,8 @@ public class UserAddServlet extends HttpServlet {
 		try {
 			Connection connection = DBUtils.getConnection();
 			Statement st = connection.createStatement();
-			ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM users WHERE username='" + username + "'");
-			rs.next();
-			int c = rs.getInt(1);
-			if (c != 0) {
-				response.getWriter().println("用户已存在");
-				return;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 
-		try {
-			Connection connection = DBUtils.getConnection();
-			Statement st = connection.createStatement();
-
-			st.executeUpdate("INSERT INTO users (username,password) VALUES ('" + username + "', '" + password1 + "')");
-
+			st.executeUpdate("UPDATE users SET password='" + password1 + "' WHERE id=" + id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

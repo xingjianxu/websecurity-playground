@@ -22,6 +22,7 @@
 				<th>ID</th>
 				<th>用户名</th>
 				<th>密码</th>
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,9 +30,13 @@
 			while (rs.next()) {
 			%>
 			<tr>
-				<td><%= rs.getString("id")%></td>
-				<td><%= rs.getString("username")%></td>
-				<td><%= rs.getString("password")%></td>
+				<td><%=rs.getString("id")%></td>
+				<td><%=rs.getString("username")%></td>
+				<td><%=rs.getString("password")%></td>
+				<td>
+					<a href="/playground/users/changePassword.jsp?userId=<%=rs.getString("id") %>">修改密码</a>
+					<a href="/playground/users/del?userId=<%=rs.getString("id") %>">删除</a>
+				</td>
 			</tr>
 			<%
 			}
