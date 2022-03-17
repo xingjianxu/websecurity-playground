@@ -39,4 +39,14 @@
     <servlet-name>LoginWithSession</servlet-name>
     <url-pattern>/1_login_basic/login_with_session/login</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LogoutWithSessionServlet</display-name>
+    <servlet-name>LogoutWithSessionServlet</servlet-name>
+    <servlet-class>playground.login.basic.LogoutWithSessionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutWithSessionServlet</servlet-name>
+    <url-pattern>/1_login_basic/login_with_session/logout</url-pattern>
+  </servlet-mapping>
 </web-app>
