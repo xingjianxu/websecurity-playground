@@ -11,6 +11,9 @@
 <a href="./logout">登出</a>
 <a href="./users/add.jsp">注册</a>
 
+<a href="./users/list.jsp">查看所有用户</a>
+
+
 <h1>Hello: <%= request.getSession().getAttribute("username") %></h1>
 
 
