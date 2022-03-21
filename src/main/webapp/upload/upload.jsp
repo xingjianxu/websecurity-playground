@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="/upload" method="POST" >
+<form action="/playground/upload" method="POST" >
 	<input type="file" name="uploadFile"/>
 	<br/>
 	<br/>
