@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.io.*"%>
+<%@ page import="playground.upload.UploadServlet"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,14 +21,21 @@
 	<table>
 		<tr>
 			<th>上传文件路径</th>
+			<th>文件大小</th>
+			<th>操作</th>
 		</tr>
 
 		<%
-		File uploadDir = new File("D:\\eclipse-workspace\\playground\\src\\main\\webapp\\upload\\");
+		File uploadDir = new File(UploadServlet.UPLOAD_DIR_PATH);
 		for (File file : uploadDir.listFiles()) {
 		%>
 		<tr>
-			<td><%= file.getAbsolutePath() %></td>
+			<td><%=file.getName()%></td>
+			<td><%=file.length()%></td>
+			<td>
+				<a href="/playground/download?fileName=<%=file.getName()%>">下载</a> |
+				<a href="/playground/deleteUpload?fileName=<%=file.getName()%>">刪除</a>
+			</td>
 		</tr>
 		<%
 		}

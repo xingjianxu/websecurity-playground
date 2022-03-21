@@ -19,6 +19,8 @@ import java.io.InputStream;
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	public static final String UPLOAD_DIR_PATH = "D:\\eclipse-workspace\\playground\\src\\main\\webapp\\upload\\";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -47,7 +49,7 @@ public class UploadServlet extends HttpServlet {
 		Part part = request.getPart("uploadFile");
 		String partName = part.getSubmittedFileName();
 
-		File localFile = new File("D:\\eclipse-workspace\\playground\\src\\main\\webapp\\upload\\" + partName);
+		File localFile = new File(UPLOAD_DIR_PATH + partName);
 		
 		FileOutputStream localFileOutputStream = new FileOutputStream(localFile);
 		
