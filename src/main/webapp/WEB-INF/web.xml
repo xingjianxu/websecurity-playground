@@ -109,4 +109,14 @@
     <servlet-name>CreateServlet</servlet-name>
     <url-pattern>/article/create</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ArticleDeleteServlet</display-name>
+    <servlet-name>ArticleDeleteServlet</servlet-name>
+    <servlet-class>playground.article.DeleteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArticleDeleteServlet</servlet-name>
+    <url-pattern>/article/delete</url-pattern>
+  </servlet-mapping>
 </web-app>
