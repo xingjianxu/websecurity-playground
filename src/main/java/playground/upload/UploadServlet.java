@@ -1,7 +1,7 @@
 package playground.upload;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,6 +16,7 @@ import java.io.InputStream;
 /**
  * Servlet implementation class UploadServlet
  */
+@MultipartConfig
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,9 +45,10 @@ public class UploadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Part part = request.getPart("uploadFile");
-		String partName = part.getName();
+		String partName = part.getSubmittedFileName();
 
-		File localFile = new File("upload/" + partName);
+		File localFile = new File("D:\\eclipse-workspace\\playground\\src\\main\\webapp\\upload\\" + partName);
+		
 		FileOutputStream localFileOutputStream = new FileOutputStream(localFile);
 		
 		InputStream in = part.getInputStream();
@@ -58,7 +60,7 @@ public class UploadServlet extends HttpServlet {
 		}
 		
 		localFileOutputStream.close();
-		response.sendRedirect("upload/upload.jsp");
+		response.sendRedirect("upload.jsp");
 	}
 
 }
