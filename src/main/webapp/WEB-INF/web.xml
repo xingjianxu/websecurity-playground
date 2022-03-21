@@ -99,4 +99,14 @@
     <servlet-name>DeleteServlet</servlet-name>
     <url-pattern>/deleteUpload</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CreateServlet</display-name>
+    <servlet-name>CreateServlet</servlet-name>
+    <servlet-class>playground.article.CreateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreateServlet</servlet-name>
+    <url-pattern>/article/create</url-pattern>
+  </servlet-mapping>
 </web-app>

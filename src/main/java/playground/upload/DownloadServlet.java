@@ -38,7 +38,7 @@ public class DownloadServlet extends HttpServlet {
 		InputStream in = new FileInputStream(file);
 
 		// 读取file的内容并写入到response里
-		byte[] buffer = new byte[10000];
+		byte[] buffer = new byte[1000];
 		while (in.read(buffer) != -1) {
 			response.getOutputStream().write(buffer);
 		}

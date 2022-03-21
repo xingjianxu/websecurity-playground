@@ -34,7 +34,8 @@
 			<td><%=file.length()%></td>
 			<td>
 				<a href="/playground/download?fileName=<%=file.getName()%>">下载</a> |
-				<a href="/playground/deleteUpload?fileName=<%=file.getName()%>">刪除</a>
+				<a href="/playground/deleteUpload?fileName=<%=file.getName()%>">刪除</a> |
+				<a href="#">重命名</a>
 			</td>
 		</tr>
 		<%
