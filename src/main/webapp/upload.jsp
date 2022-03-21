@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="java.io.*"%>
-<%@ page import="playground.upload.UploadServlet"%>
+<%@ include file="/header.jsp" %>
 
 <!DOCTYPE html>
 <html>
