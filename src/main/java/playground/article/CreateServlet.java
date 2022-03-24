@@ -76,9 +76,13 @@ public class CreateServlet extends HttpServlet {
 						+ "', '" + content + "', '" + dateStr + "', '" + dateStr + "', '" + authorId + "')");
 			} else {
 				// 此时id不为空，说明正在编辑一个已经存在的article
-				// 执行更新指定文章的代码
-				statement.executeUpdate("UPDATE articles SET title='" + title + "',content='" + content
-						+ "',modifiedAt='" + dateStr + "' WHERE id=" + id);
+				
+				// 只有当当前登录用户为文章作者时，才能执行更新指定文章的代码
+				if (id.equals(authorId)) {
+					statement.executeUpdate("UPDATE articles SET title='" + title + "',content='" + content
+							+ "',modifiedAt='" + dateStr + "' WHERE id=" + id);
+				}
+				
 			}
 
 		} catch (SQLException throwables) {

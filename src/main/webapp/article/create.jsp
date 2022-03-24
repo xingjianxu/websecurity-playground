@@ -10,6 +10,7 @@
 <title>文章创建</title>
 </head>
 <body>
+<jsp:include page="/navline.jsp"></jsp:include>
 
 <form action="/playground/article/create" method="post">
 文章标题：

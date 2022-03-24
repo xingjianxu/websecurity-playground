@@ -11,6 +11,8 @@
 <title>文章列表</title>
 </head>
 <body>
+	<jsp:include page="/navline.jsp"></jsp:include>
+	
 	<a href="/playground/article/create.jsp">创建新文章</a>
 
 	<%

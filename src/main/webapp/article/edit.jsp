@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="playground.login.LoginServlet" %>
 <%@ include file="/header.jsp" %>
 
 <!DOCTYPE html>
@@ -11,6 +10,7 @@
 </head>
 <body>
 
+<jsp:include page="/navline.jsp"></jsp:include>
 
 	<%
 	Connection conn = DBUtils.getConnection();
@@ -24,18 +24,17 @@
 	if (rs.getString("author_id").equals(loginUserId)) {
 		%>
 		<form action="/playground/article/create" method="post">
-		<input type="hidden" name="id"
-			value="<%=request.getParameter("id")%>" /> 文章标题： <br /> 
-			
-		<input type="text" name="title" value="<%= rs.getString("title") %>" style="width: 400px" /> 
-		<br /> <br />
-
-		文章内容： <br />
-		<textarea name="content" rows="10" style="width: 400px"><%= rs.getString("content") %></textarea>
-		<br /> 
-		<input type="submit" value="保存" />
-
-	</form>
+			<input type="hidden" name="id"
+				value="<%=request.getParameter("id")%>" /> 文章标题： <br /> 
+				
+			<input type="text" name="title" value="<%= rs.getString("title") %>" style="width: 400px" /> 
+			<br /> <br />
+	
+			文章内容： <br />
+			<textarea name="content" rows="10" style="width: 400px"><%= rs.getString("content") %></textarea>
+			<br /> 
+			<input type="submit" value="保存" />
+		</form>
 		<%
 	} else {
 		%>
