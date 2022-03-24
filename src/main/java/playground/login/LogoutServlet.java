@@ -26,7 +26,7 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 通过移除session属性，实现用户登出
-		request.getSession().removeAttribute("username");
+		request.getSession().removeAttribute(LoginServlet.LOGIN_USER_ID);
 		
 		// 重定向到index.jsp
 		response.sendRedirect("index.jsp");

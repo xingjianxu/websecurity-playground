@@ -15,7 +15,7 @@
 	<%
 	Connection conn = DBUtils.getConnection();
 	Statement st = conn.createStatement();
-	ResultSet rs = st.executeQuery("SELECT * FROM articles WHERE id=" + request.getParameter("id"));
+	ResultSet rs = st.executeQuery("SELECT * FROM articles JOIN users ON articles.author_id=users.id WHERE articles.id=" + request.getParameter("id"));
 	// 指定id的文章不存在
 	if (!rs.next()) {
 	%>
@@ -24,6 +24,8 @@
 	} else {
 	%>
 	<h2><%=rs.getString("title")%></h2>
+	<br/> 
+	作者：<%=rs.getString("username") %>
 	<article>
 		<%=rs.getString("content")%>
 	</article>

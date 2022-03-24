@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="playground.login.LoginServlet" %>
 <%@ include file="/header.jsp" %>
 <!DOCTYPE html>
 <html>
@@ -14,8 +15,9 @@
 
 <a href="./users/list.jsp">查看所有用户</a>
 
+<a href="./article/list.jsp">查看用户文章</a>
 
-<h1>Hello: <%= request.getSession().getAttribute("username") %></h1>
+<h1>Hello: <%= request.getSession().getAttribute(LoginServlet.LOGIN_USER_ID) %></h1>
 
 
 </body>

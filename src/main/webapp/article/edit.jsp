@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="playground.login.LoginServlet" %>
 <%@ include file="/header.jsp" %>
 
 <!DOCTYPE html>
@@ -14,11 +15,15 @@
 	<%
 	Connection conn = DBUtils.getConnection();
 	Statement st = conn.createStatement();
-	ResultSet rs = st.executeQuery("SELECT * FROM articles WHERE id=" + request.getParameter("id"));
+	ResultSet rs = st.executeQuery("SELECT * FROM articles JOIN users ON articles.author_id=users.id WHERE articles.id=" + request.getParameter("id"));
 	rs.next();
-	%>
+	
+	String loginUserId = (String) request.getSession().getAttribute(LoginServlet.LOGIN_USER_ID);
 
-	<form action="/playground/article/create" method="post">
+	// 判断当前登录用户与文章作者是否一致，只有一致的情况下，才显示修改文章的表单
+	if (rs.getString("author_id").equals(loginUserId)) {
+		%>
+		<form action="/playground/article/create" method="post">
 		<input type="hidden" name="id"
 			value="<%=request.getParameter("id")%>" /> 文章标题： <br /> 
 			
@@ -31,6 +36,16 @@
 		<input type="submit" value="保存" />
 
 	</form>
+		<%
+	} else {
+		%>
+		<h1>用户未登录或不允许编辑其他人的文章！</h1>
+		<%
+	}
+	
+	%>
+
+	
 
 </body>
 </html>

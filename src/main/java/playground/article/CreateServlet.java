@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import playground.DBUtils;
+import playground.login.LoginServlet;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -49,6 +50,15 @@ public class CreateServlet extends HttpServlet {
 		String content = request.getParameter("content");
 
 		String id = request.getParameter("id");
+		
+		// 取得当前登录用户的ID
+		String authorId = (String) request.getSession().getAttribute(LoginServlet.LOGIN_USER_ID);
+		// 如果ID为空，说明未登录，无法继续执行
+		if (authorId == null || authorId.isBlank()) {
+			response.getWriter().println("用户未登录，请先<a href='/playground/login.jsp'>登录</a>。");
+			return;
+		}
+		
 
 		// 向数据库中插入新文章
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -62,8 +72,8 @@ public class CreateServlet extends HttpServlet {
 
 			if (id == null) {
 				// 当创建文章时，id为空，执行插入新文章的代码
-				statement.executeUpdate("INSERT INTO articles (title,content,createdAt,modifiedAt) VALUES ('" + title
-						+ "', '" + content + "', '" + dateStr + "', '" + dateStr + "')");
+				statement.executeUpdate("INSERT INTO articles (title,content,createdAt,modifiedAt,author_id) VALUES ('" + title
+						+ "', '" + content + "', '" + dateStr + "', '" + dateStr + "', '" + authorId + "')");
 			} else {
 				// 此时id不为空，说明正在编辑一个已经存在的article
 				// 执行更新指定文章的代码
