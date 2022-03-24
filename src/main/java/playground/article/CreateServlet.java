@@ -51,14 +51,15 @@ public class CreateServlet extends HttpServlet {
 
 		String id = request.getParameter("id");
 		
-		// 取得当前登录用户的ID
-		String authorId = (String) request.getSession().getAttribute(LoginServlet.LOGIN_USER_ID);
-		// 如果ID为空，说明未登录，无法继续执行
-		if (authorId == null || authorId.isBlank()) {
+		// 如果未登录，无法继续执行
+		if (!(boolean)request.getAttribute("isLogin")) {
 			response.getWriter().println("用户未登录，请先<a href='/playground/login.jsp'>登录</a>。");
 			return;
 		}
 		
+		// 取得当前登录用户的ID
+		String authorId = (String) request.getAttribute("loginUserId");
+
 
 		// 向数据库中插入新文章
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

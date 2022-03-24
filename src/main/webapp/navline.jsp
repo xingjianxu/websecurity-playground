@@ -3,23 +3,16 @@
 <%@ include file="/header.jsp" %>
 
 <%
-String loginUserId = (String) request.getSession().getAttribute(LoginServlet.LOGIN_USER_ID);
 
 //如果用户未登录
-if (loginUserId == null || loginUserId.isBlank()) {
+if (!(boolean)request.getAttribute("isLogin")) {
 	%>
 	<span>用户未登录！</span>
 	
 	<%
 } else {
-Connection conn = DBUtils.getConnection();
-Statement st = conn.createStatement();
-ResultSet rs = st.executeQuery("SELECT * FROM users WHERE id=" + loginUserId);
-
-rs.next();
-String username = rs.getString("username");
 %>
-<span>当前登录用户：<%= username %></span>
+<span>当前登录用户：<%= request.getAttribute("loginUserName") %></span>
 <% } %>
 
 <a href="/playground/login.jsp">登录</a>

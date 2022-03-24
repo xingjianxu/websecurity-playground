@@ -10,8 +10,6 @@
 <title>文章浏览</title>
 </head>
 <body>
-
-
 	<%
 	Connection conn = DBUtils.getConnection();
 	Statement st = conn.createStatement();
@@ -21,6 +19,11 @@
 	%>
 	<h2>文章不存在！</h2>
 	<%
+	} else if(!rs.getString("author_id").equals(request.getAttribute("loginUserId"))) {
+		// 如果当前登录用户不是该文章的作者，则不允许查看该文章
+		%>
+			<h2>当前登录用户不是该文章的作者，不允许查看该文章！</h2>
+		<%
 	} else {
 	%>
 	<h2><%=rs.getString("title")%></h2>
