@@ -71,6 +71,7 @@ public class LoginServlet extends HttpServlet {
 				}
 			} else {
 				response.getWriter().println("用户不存在！");
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			}
 
 		} catch (SQLException e) {
