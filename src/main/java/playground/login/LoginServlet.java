@@ -67,6 +67,7 @@ public class LoginServlet extends HttpServlet {
 				} else {
 					// 用户提交了错误的用户与密码，不允许登录
 					response.getWriter().println("登录失败：用户名与密码不匹配");
+					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 				}
 			} else {
 				response.getWriter().println("用户不存在！");

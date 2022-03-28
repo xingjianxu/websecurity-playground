@@ -119,6 +119,7 @@
     <servlet-name>ArticleDeleteServlet</servlet-name>
     <url-pattern>/article/delete</url-pattern>
   </servlet-mapping>
+  
   <filter>
     <display-name>AuthenticationFilter</display-name>
     <filter-name>AuthenticationFilter</filter-name>
