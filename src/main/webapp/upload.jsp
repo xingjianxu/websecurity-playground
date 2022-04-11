@@ -7,13 +7,30 @@
 <head>
 <meta charset="UTF-8">
 <title>文件上传</title>
+<script type="text/javascript">
+// 通过将此函数绑定到表单的onsubmit属性中
+// 如果此函数返回true，则允许表单继续提交；否则，不允许表达提交
+function checkUploadFile() {
+	// 得到上传input控件的元素
+	var fu = document.getElementById("fileUpload");
+	
+	// 得到用户选择的上传文件
+	var selectedFile = fu.value;
+	
+	if (!(selectedFile.endsWith(".jpeg") || selectedFile.endsWith(".jpg") || selectedFile.endsWith(".png"))) {
+		alert("非图片文件不允许上传！");
+		return false;
+	} else {
+		return true;
+	}
+}
+</script>
 </head>
 <body>
+	<!-- 此表单在每次提交之前，都会执行onsubmit中的js代码，只有当该代码返回true，才会继续提交 -->
+	<form action="/playground/upload" method="POST" enctype="multipart/form-data" onsubmit="return checkUploadFile();">
 
-	<form action="/playground/upload" method="POST"
-		enctype="multipart/form-data">
-
-		<input type="file" name="uploadFile" accept=".jpeg,.jpg,.png"/>
+		<input type="file" name="uploadFile" accept=".jpg,.jpeg,.png" id="fileUpload"/>
 		<br /> <br />
 		<input type="submit" value="开始上传" />
 	</form>
