@@ -13,8 +13,9 @@
 	<form action="/playground/upload" method="POST"
 		enctype="multipart/form-data">
 
-		<input type="file" name="uploadFile" /> <br /> <br /> <input
-			type="submit" value="开始上传" />
+		<input type="file" name="uploadFile"/>
+		<br /> <br />
+		<input type="submit" value="开始上传" />
 	</form>
 
 	<table>
