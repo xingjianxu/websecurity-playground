@@ -48,6 +48,13 @@ public class UploadServlet extends HttpServlet {
 			throws ServletException, IOException {
 		Part part = request.getPart("uploadFile");
 		String partName = part.getSubmittedFileName();
+		
+		//限制用户上传文件类型
+		if (!(partName.endsWith(".jpeg") || partName.endsWith(".jpg") || partName.endsWith(".png"))) {
+			response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
+			response.getWriter().write("只能上传图片！");
+			return;
+		}
 
 		File localFile = new File(UPLOAD_DIR_PATH + partName);
 		

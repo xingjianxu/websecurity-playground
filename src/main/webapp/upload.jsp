@@ -13,7 +13,7 @@
 	<form action="/playground/upload" method="POST"
 		enctype="multipart/form-data">
 
-		<input type="file" name="uploadFile"/>
+		<input type="file" name="uploadFile" accept=".jpeg,.jpg,.png"/>
 		<br /> <br />
 		<input type="submit" value="开始上传" />
 	</form>
