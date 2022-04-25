@@ -5,9 +5,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import playground.DBUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Servlet implementation class DeleteServlet
@@ -29,11 +34,29 @@ public class DeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		File file = new File(UploadServlet.UPLOAD_DIR_PATH + request.getParameter("fileName"));
+		try {
+			String fileId = request.getParameter("fileId");
+			Connection conn = DBUtils.getConnection();
 
-		file.delete();
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM upload_files WHERE id=" + fileId);
 
-		response.sendRedirect("upload.jsp");
+			// 没有找到fileID对应的上传路径，返回404错误
+			if (!rs.next()) {
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+
+			File file = new File(rs.getString("path"));
+			file.delete();
+			
+			st.executeUpdate("DELETE FROM upload_files WHERE id="+fileId);
+
+			response.sendRedirect("upload.jsp");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

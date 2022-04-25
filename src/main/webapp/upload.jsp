@@ -44,14 +44,19 @@ function checkUploadFile() {
 
 		<%
 		File uploadDir = new File(UploadServlet.UPLOAD_DIR_PATH);
-		for (File file : uploadDir.listFiles()) {
+		Connection conn = DBUtils.getConnection();
+		Statement st = conn.createStatement();
+		ResultSet rs = st.executeQuery("SELECT * FROM upload_files");
+		
+		while (rs.next()) {
+			File file = new File(rs.getString("path"));
 		%>
 		<tr>
 			<td><%=file.getName()%></td>
 			<td><%=file.length()%></td>
 			<td>
-				<a href="/playground/download?fileName=<%=file.getName()%>">下载</a> |
-				<a href="/playground/deleteUpload?fileName=<%=file.getName()%>">刪除</a> |
+				<a href="/playground/download?fileId=<%=rs.getInt("id")%>">下载</a> |
+				<a href="/playground/deleteUpload?fileId=<%=rs.getInt("id")%>">刪除</a> |
 				<a href="#">重命名</a>
 			</td>
 		</tr>

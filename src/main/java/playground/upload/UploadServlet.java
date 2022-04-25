@@ -6,12 +6,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import playground.DBUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Servlet implementation class UploadServlet
@@ -19,7 +23,7 @@ import java.io.InputStream;
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final String UPLOAD_DIR_PATH = "D:\\eclipse-workspace\\playground\\src\\main\\webapp\\upload\\";
 
 	/**
@@ -48,8 +52,8 @@ public class UploadServlet extends HttpServlet {
 			throws ServletException, IOException {
 		Part part = request.getPart("uploadFile");
 		String partName = part.getSubmittedFileName();
-		
-		//限制用户上传文件类型
+
+		// 限制用户上传文件类型
 		if (!(partName.endsWith(".jpeg") || partName.endsWith(".jpg") || partName.endsWith(".png"))) {
 			response.setStatus(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE);
 			response.getWriter().write("只能上传图片！");
@@ -57,18 +61,29 @@ public class UploadServlet extends HttpServlet {
 		}
 
 		File localFile = new File(UPLOAD_DIR_PATH + partName);
-		
+
 		FileOutputStream localFileOutputStream = new FileOutputStream(localFile);
-		
+
 		InputStream in = part.getInputStream();
-		
+
 		// 将客户端的上传数据存储到localFile中
 		byte[] buffer = new byte[1000];
 		while (in.read(buffer) != -1) {
 			localFileOutputStream.write(buffer);
 		}
-		
+
 		localFileOutputStream.close();
+		
+
+		try {
+			Connection conn = DBUtils.getConnection();
+			Statement st = conn.createStatement();
+			
+			st.executeUpdate("INSERT INTO upload_files (path) VALUES ('" + localFile.getAbsolutePath().replace("\\", "\\\\") + "')");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		response.sendRedirect("upload.jsp");
 	}
 
