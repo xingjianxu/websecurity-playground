@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -50,10 +51,15 @@ public class LoginServlet extends HttpServlet {
 
 		try {
 			Connection conn = DBUtils.getConnection();
-			Statement statement = conn.createStatement();
-			ResultSet rs = statement.executeQuery(
-					String.format("SELECT * FROM users WHERE username='%s' AND password='%s'", username, password)
-					);
+			// Statement statement = conn.createStatement();
+			
+			// 为了避免SQL注入漏洞，这里使用PreparedStatement，而不是Statement
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
+			
+			ps.setString(1, username);
+			ps.setString(2, password);
+
+			ResultSet rs = ps.executeQuery();
 
 			// 如果rs可以将游标向下移动一行，说明上面的SQL返回了数据，即username对应的用户存在；反之，则说明用户不存在
 			if (rs.next()) {
