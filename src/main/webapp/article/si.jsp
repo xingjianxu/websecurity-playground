@@ -16,9 +16,9 @@
 	<%
 	String id = request.getParameter("id");
 	Connection conn = DBUtils.getConnection();
-	Statement st = conn.createStatement();
-
-	ResultSet rs = st.executeQuery("SELECT id, title FROM articles WHERE id="+id);
+	PreparedStatement st = conn.prepareStatement("SELECT id, title FROM articles WHERE id=?");
+	st.setInt(1, Integer.valueOf(id));
+	ResultSet rs = st.executeQuery();
 	%>
 
 	<table>
