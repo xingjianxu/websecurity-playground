@@ -19,6 +19,7 @@
 	// 是否存在SQL注入漏洞，若存在，演示利用此漏洞的方法，并提出修改代码的方案
 	Connection conn = DBUtils.getConnection();
 	Statement st = conn.createStatement();
+		
 	// 为了显示用户名，在SQL中用了JOIN语句
 	ResultSet rs = st.executeQuery("SELECT * FROM articles JOIN users ON articles.author_id=users.id ORDER BY modifiedAt DESC");
 	%>
