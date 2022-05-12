@@ -8,13 +8,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import playground.DBUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * ������û�
+ * 用户注册
  */
 public class UserAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -53,9 +57,17 @@ public class UserAddServlet extends HttpServlet {
 			response.getWriter().println("密码不一致！");
 			return;
 		}
-
+		
+		Connection connection = null;
 		try {
-			Connection connection = DBUtils.getConnection();
+			connection = DBUtils.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		// 验证用户名是否已被占用
+		try {
 			Statement st = connection.createStatement();
 			ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM users WHERE username='" + username + "'");
 			rs.next();
@@ -68,11 +80,13 @@ public class UserAddServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
+		// 在数据库中插入新用户的信息
 		try {
-			Connection connection = DBUtils.getConnection();
 			Statement st = connection.createStatement();
-
-			st.executeUpdate("INSERT INTO users (username,password) VALUES ('" + username + "', '" + password1 + "')");
+			String hashedPassword = hashPassword(password1);
+			
+			// 在数据库中保存的是密码加密后的密文
+			st.executeUpdate("INSERT INTO users (username,password) VALUES ('" + username + "', '" + hashedPassword + "')");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -80,6 +94,20 @@ public class UserAddServlet extends HttpServlet {
 		
 		response.sendRedirect("list.jsp");
 
+	}
+	
+	public static String hashPassword(String password) {
+		try {
+			MessageDigest md5 = MessageDigest.getInstance("md5");
+			byte[] digest = md5.digest(password.getBytes("utf-8"));
+			
+			return new BigInteger(1, digest).toString(16);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

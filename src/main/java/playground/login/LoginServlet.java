@@ -2,7 +2,7 @@ package playground.login;
 
 import jakarta.servlet.ServletException;
 import playground.DBUtils;
-
+import playground.users.UserAddServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -54,24 +54,30 @@ public class LoginServlet extends HttpServlet {
 			// Statement statement = conn.createStatement();
 			
 			// 为了避免SQL注入漏洞，这里使用PreparedStatement，而不是Statement
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username=? AND password=?");
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE username=?");
 			
 			ps.setString(1, username);
-			ps.setString(2, password);
 
 			ResultSet rs = ps.executeQuery();
 
 			// 如果rs可以将游标向下移动一行，说明上面的SQL返回了数据，即username对应的用户存在；反之，则说明用户不存在
 			if (rs.next()) {
-				// 用户提交了正确的用户与密码，允许登录
-				response.sendRedirect("index.jsp");
+				String hashedPassword = rs.getString("password");
+				
+				if (checkPassword(password, hashedPassword)) {
+					// 用户提交了正确的用户与密码，允许登录
+					response.sendRedirect("index.jsp");
 
-				// 将登录用户的ID存在session中
-				request.getSession().setAttribute(LOGIN_USER_ID, rs.getString("id"));
+					// 将登录用户的ID存在session中
+					request.getSession().setAttribute(LOGIN_USER_ID, rs.getString("id"));
 
+				} else {
+					// 用户提交了错误的用户与密码，不允许登录或者用户名不存在
+					response.getWriter().println("登录失败");
+					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				}
 			} else {
-				// 用户提交了错误的用户与密码，不允许登录或者用户名不存在
-				response.getWriter().println("登录失败");
+				response.getWriter().println("用户不存在");
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			}
 
@@ -80,4 +86,9 @@ public class LoginServlet extends HttpServlet {
 		}
 	}
 
+	public static boolean checkPassword(String password, String hashedPassword) {
+		// 如果数据库中存的密码密文，与用户提供密码的密文一致，说明密码匹配
+		return UserAddServlet.hashPassword(password).equals(hashedPassword);
+	}
+	
 }
