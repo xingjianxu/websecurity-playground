@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * Servlet implementation class LoginWithSession
  */
@@ -88,7 +90,7 @@ public class LoginServlet extends HttpServlet {
 
 	public static boolean checkPassword(String password, String hashedPassword) {
 		// 如果数据库中存的密码密文，与用户提供密码的密文一致，说明密码匹配
-		return UserAddServlet.hashPassword(password).equals(hashedPassword);
+		return BCrypt.checkpw(password, hashedPassword);
 	}
 	
 }

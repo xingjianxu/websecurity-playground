@@ -17,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * 用户注册
  */
@@ -97,17 +99,7 @@ public class UserAddServlet extends HttpServlet {
 	}
 	
 	public static String hashPassword(String password) {
-		try {
-			MessageDigest md5 = MessageDigest.getInstance("md5");
-			byte[] digest = md5.digest(password.getBytes("utf-8"));
-			
-			return new BigInteger(1, digest).toString(16);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 
 }

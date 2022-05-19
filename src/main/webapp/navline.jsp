@@ -23,4 +23,7 @@ if (!(boolean)request.getAttribute("isLogin")) {
 
 <a href="/playground/article/list.jsp">查看用户文章</a>
 
+<a href="/playground/rainbow.jsp">彩虹表</a>
+
+
 <br/><br/>
